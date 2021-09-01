@@ -1,4 +1,4 @@
-from .util.headers import *
+from util.headers import *
 
 
 # Default setting
@@ -8,7 +8,6 @@ def define_parser():
 
     # set load_data path
     args.main_path = './main_data'
-    args.sub_path = './sub_data'
 
     # set datasets
     args.train_size = 0.8

@@ -6,3 +6,4 @@ from .plot_module import *
 from .southwest_module import *
 from .train_setting import *
 from .model.all import *
+from .train import *

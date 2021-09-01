@@ -10,11 +10,11 @@ version: 0.1
 """
 
 
-def train_plot(history):
+def train_plot(train_loss, val_loss):
     plt.style.use('ggplot')
     fig, ax = plt.subplots(figsize=(16, 7))
-    ax.plot(history.history['loss'], label='train_loss')
-    ax.plot(history.history['val_loss'], label='val_loss')
+    ax.plot(train_loss, label='train_loss')
+    ax.plot(val_loss, label='val_loss')
     ax.legend()
     plt.show()
 

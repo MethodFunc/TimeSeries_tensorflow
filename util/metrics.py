@@ -58,35 +58,10 @@ def check_acc(y_true, y_pred):
     y_true = y_true.ravel()
     y_pred = y_pred.ravel()
     error_rate = abs((y_pred - y_true)) / y_true * 100
-    acc = []
-    for i in error_rate:
-        rate = 100 - i
-        if rate < 0:
-            continue
-        else:
-            acc.append(rate)
-
+    acc = [100 - err for err in error_rate]
     acc = np.array(acc)
-    print(f"Acc Mean: {acc.mean():.4f}%")
-    print(f"Acc Max: {acc.max():.4f}%")
-    print(f"Acc Min: {acc.min():.4f}%")
+    acc_mean = np.mean(acc)
 
-
-def forecasting(x, model, scale=None, inverse=False):
-    true = []
-    predicted = []
-    for n, (X, y) in enumerate(x):
-        true.append(y.numpy())
-        temp = model.predict(X.numpy())
-        predicted.append(temp)
-
-    true = np.array(true)
-    predicted = np.array(predicted)
-
-    if inverse:
-        if scale is None or not scale:
-            raise 'scale is not define'
-        true = scale.inverse_transform(true.reshape(-1, 1))
-        predicted = scale.inverse_transform(predicted.reshape(-1, 1))
-
-    return true, predicted
+    print(f"Acc Mean: {acc_mean:.4f}%")
+    print(f"Acc Min : {np.min(acc):.4f}%")
+    print(f"Acc Max : {np.max(acc):.4f}%")

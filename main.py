@@ -5,12 +5,9 @@ from setting import *
 
 def preprocess_data(args):
     raw_data = LoadDataframe(args.main_path).get_df()
-    rotorspeed_df = LoadDataframe(args.sub_path).get_df()
-    rotorspeed_df.drop('//DateTime', axis=1, inplace=True)
-    merge_df = pd.merge(raw_data, rotorspeed_df, left_index=True, right_index=True)
-    clean_df = cleanup_df(merge_df)
+    clean_df = cleanup_df(raw_data)
     pre_df = processing_data(clean_df, shift=None)
-    pre_df = pre_df[['Direction_mean', 'WindSpeed', 'RotorP', 'RotorSpeed', 'Average_PB', 'GenertorTR', 'ActiveP']]
+    pre_df = pre_df[['Direction_mean', 'WindSpeed', 'RotorP', 'Average_PB', 'GenertorTR', 'ActiveP']]
 
     feature = pre_df.drop(["ActiveP"], axis=1).values
     target = pre_df["ActiveP"].values.reshape(-1, 1)
@@ -45,28 +42,14 @@ if __name__ == '__main__':
     # tensorflow setting
     optimizer = optim(args)
     loss = RMSE()
-    # loss = loss_fn(args)
-    cus = CustomHistory()
+    train_metric = tf.keras.metrics.MeanAbsoluteError()
+    val_metric = tf.keras.metrics.MeanAbsoluteError()
 
-    model = cus_model(args)
-    model.compile(loss=loss, optimizer=optimizer, metrics=['mae'])
+    model = lstm_model(args)
 
-    history = model.fit(train_set, epochs=args.epoch, validation_data=val_set, callbacks=[cus], verbose=2)
-
-    train_plot(history)
+    train(train_set, val_set, model, loss, optimizer, train_metric, val_metric, args)
 
     y_true, y_predict = forecasting(test_set, model=model, scale=ts, inverse=True)
 
-    predict_plot(y_true[-144:], y_predict[-144:])
-
     check_acc(y_true, y_predict)
     evalution(y_true, y_predict)
-
-    # min -> hour
-    hour_true, hour_pred = min_to_hour(y_true, y_predict)
-    predict_plot(hour_true, hour_pred)
-
-    check_acc(hour_true, hour_pred)
-    evalution(hour_true, hour_pred)
-
-    extract_result(y_true, y_predict, idx=None)
