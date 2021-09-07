@@ -1,4 +1,4 @@
-__all__ = ['min_to_hour', 'evalution', 'check_acc', 'forecasting']
+__all__ = ["min_to_hour", "evalution", "check_acc", "forecasting"]
 
 from .headers import *
 

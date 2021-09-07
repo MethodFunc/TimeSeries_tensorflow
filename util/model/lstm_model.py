@@ -2,7 +2,7 @@ from ..headers import *
 
 
 def lstm_model(args):
-    input_layer = Input(shape=(args.window_size, args.feature_size), name='input_layer')
+    input_layer = Input(shape=(args.window_size, args.feature_size), name="input_layer")
     x = (LSTM(128, return_sequences=True))(input_layer)
     x = (LSTM(64, dropout=0.3))(x)
     x = BatchNormalization(batch_size=128)(x)

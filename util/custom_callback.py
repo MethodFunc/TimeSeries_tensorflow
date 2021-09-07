@@ -1,4 +1,4 @@
-__all__ = ['CustomHistory', 'RMSE']
+__all__ = ["CustomHistory", "RMSE"]
 
 from .headers import *
 
@@ -30,10 +30,10 @@ class CustomHistory(tf.keras.callbacks.Callback):
         self.ts = time.time()
 
     def on_epoch_end(self, batch, logs=[]):
-        self.total_train.append(logs.get('loss'))
-        self.total_val.append(logs.get('val_loss'))
+        self.total_train.append(logs.get("loss"))
+        self.total_val.append(logs.get("val_loss"))
         self.timeit = time.time() - self.ts
-        self.get_logs['time'] = self.timeit
+        self.get_logs["time"] = self.timeit
         for key, values in logs.items():
             self.get_logs[key] = values
 

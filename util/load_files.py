@@ -1,4 +1,4 @@
-__all__ = ['LoadDataframe']
+__all__ = ["LoadDataframe"]
 
 import glob
 import os
@@ -47,7 +47,7 @@ class LoadDataframe:
 
     def __repr__(self):
         if self.df.empty:
-            return 'Empty DataFrame'
+            return "Empty DataFrame"
         else:
             return f"DataFrame size: {self.df.shape}"
 
@@ -67,7 +67,7 @@ class LoadDataframe:
             if self.__check_path() == 1:
                 self.__load_file_df()
         except UnboundLocalError:
-            print(f"파일 경로 및 폴더 경로가 잘못 되었습니다.")
+            print("파일 경로 및 폴더 경로가 잘못 되었습니다.")
             exit()
 
     def __check_path(self):
@@ -108,11 +108,15 @@ class LoadDataframe:
             extension_type = re.sub(regex, "", extension_type)
 
         check = str.lower(extension_type)
-        if check == 'csv':
-            temp = pd.read_csv(file_path, index_col=self._index_col, header=self._header)
-        elif (check == 'xls') or (check == 'xlsx'):
-            temp = pd.read_excel(file_path, index_col=self._index_col, header=self._header)
+        if check == "csv":
+            temp = pd.read_csv(
+                file_path, index_col=self._index_col, header=self._header
+            )
+        elif (check == "xls") or (check == "xlsx"):
+            temp = pd.read_excel(
+                file_path, index_col=self._index_col, header=self._header
+            )
         else:
-            raise f"Not support extension type"
+            raise "Not support extension type"
 
         return temp

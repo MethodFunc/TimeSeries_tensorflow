@@ -7,7 +7,9 @@ def preprocess_data(args):
     raw_data = LoadDataframe(args.main_path).get_df()
     clean_df = cleanup_df(raw_data)
     pre_df = processing_data(clean_df, shift=None)
-    pre_df = pre_df[['Direction_mean', 'WindSpeed', 'RotorP', 'Average_PB', 'GenertorTR', 'ActiveP']]
+    pre_df = pre_df[
+        ["Direction_mean", "WindSpeed", "RotorP", "Average_PB", "GenertorTR", "ActiveP"]
+    ]
 
     feature = pre_df.drop(["ActiveP"], axis=1).values
     target = pre_df["ActiveP"].values.reshape(-1, 1)
@@ -17,18 +19,29 @@ def preprocess_data(args):
 
 
 def make_dataset(feature, label, args):
-    x_train, y_train, x_val, y_val = data_split(feature, label, split_size=args.train_size)
+    x_train, y_train, x_val, y_val = data_split(
+        feature, label, split_size=args.train_size
+    )
     x_val, y_val, x_test, y_test = data_split(x_val, y_val, split_size=args.val_size)
 
-    train = multivariable_window_dataset(x_train, y_train, window_size=args.window_size, batch_size=args.batch_size,
-                                         shuffle=True)
-    val = multivariable_window_dataset(x_val, y_val, window_size=args.window_size, batch_size=args.batch_size)
-    test = multivariable_window_dataset(x_test, y_test, window_size=args.window_size, batch_size=args.batch_size)
+    train = multivariable_window_dataset(
+        x_train,
+        y_train,
+        window_size=args.window_size,
+        batch_size=args.batch_size,
+        shuffle=True,
+    )
+    val = multivariable_window_dataset(
+        x_val, y_val, window_size=args.window_size, batch_size=args.batch_size
+    )
+    test = multivariable_window_dataset(
+        x_test, y_test, window_size=args.window_size, batch_size=args.batch_size
+    )
 
     return train, val, test
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     args = define_parser()
     features, targets, data = preprocess_data(args)
 

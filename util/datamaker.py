@@ -1,4 +1,4 @@
-__all__ = ['data_split', 'single_window_dataset', 'multivariable_window_dataset']
+__all__ = ["data_split", "single_window_dataset", "multivariable_window_dataset"]
 
 import tensorflow as tf
 
@@ -13,7 +13,7 @@ version: 0.2
 
 def data_split(feature, label, split_size=None):
     if split_size > 1.0:
-        raise BaseException(f"Data split length over...")
+        raise BaseException("Data split length over...")
 
     data_size = len(feature)
     train = int(round(data_size * split_size, 0))
@@ -30,7 +30,7 @@ def single_window_dataset(series, window_size: int, batch_size: int, shuffle=Fal
     Only Single variable step maker
     """
     if not type(shuffle) is bool:
-        raise f'Shuffle is must be bool type'
+        raise "Shuffle is must be bool type"
 
     series = tf.expand_dims(series, axis=-1)
     dataset = tf.data.Dataset.from_tensor_slices(series)
@@ -44,7 +44,9 @@ def single_window_dataset(series, window_size: int, batch_size: int, shuffle=Fal
     return dataset.batch(batch_size, drop_remainder=True).prefetch(1)
 
 
-def multivariable_window_dataset(x, y, window_size: int, batch_size: int, shuffle=False):
+def multivariable_window_dataset(
+    x, y, window_size: int, batch_size: int, shuffle=False
+):
     """
     Tensorflow multivariable datamaker for timeseries
     x = feature
