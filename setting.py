@@ -23,8 +23,8 @@ def define_parser():
     args.optim = "adam"
 
     # loss_fn list = huber, mse, mae, binary, category
-    args.loss_fn = "mae"
-    args.lr = 1e-4
-    args.epoch = 50
+    args.loss_fn = "mse"
+    args.lr = 1e-3
+    args.epochs = 100
 
     return args

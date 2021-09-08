@@ -23,15 +23,15 @@ def scaling(data, method="minmax"):
 
 def loss_fn(args):
     if args.loss_fn == "huber":
-        loss = Huber()
+        loss = Huber
     elif args.loss_fn == "mse":
-        loss = mse()
+        loss = mse
     elif args.loss_fn == "mae":
-        loss = mae()
+        loss = mae
     elif args.loss_fn == "binary":
-        loss = binary_crossentropy()
+        loss = binary_crossentropy
     elif args.loss_fn == "category":
-        loss = categorical_crossentropy()
+        loss = categorical_crossentropy
     else:
         raise f"{args.loss_fn} == not support"
 

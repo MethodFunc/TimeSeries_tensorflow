@@ -20,6 +20,9 @@ def train_plot(train_loss, val_loss):
 
 
 def predict_plot(y_true, y_pred):
+    y_true = np.array(y_true) if not isinstance(y_true, np.ndarray) else y_true
+    y_pred = np.array(y_pred) if not isinstance(y_pred, np.ndarray) else y_pred
+
     plt.style.use("ggplot")
     y_true = y_true.ravel()
     y_pred = y_pred.ravel()

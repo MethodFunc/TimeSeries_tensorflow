@@ -6,6 +6,5 @@ __all__ = [
     "metrics",
     "plot_module",
     "southwest_module",
-    "tensor_model",
     "train_setting",
 ]

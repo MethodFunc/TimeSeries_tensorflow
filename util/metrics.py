@@ -1,4 +1,4 @@
-__all__ = ["min_to_hour", "evalution", "check_acc", "forecasting"]
+__all__ = ["min_to_hour", "evalution", "check_acc"]
 
 from .headers import *
 
@@ -58,8 +58,16 @@ def check_acc(y_true, y_pred):
     y_true = y_true.ravel()
     y_pred = y_pred.ravel()
     error_rate = abs((y_pred - y_true)) / y_true * 100
-    acc = [100 - err for err in error_rate]
-    acc = np.array(acc)
+    calc_acc = np.array([100 - i for i in error_rate if i != np.inf])
+
+    acc = np.zeros(calc_acc.shape)
+
+    for i in range(len(calc_acc)):
+        if calc_acc[i] < 0:
+            acc[i] = 0
+        else:
+            acc[i] = calc_acc[i]
+
     acc_mean = np.mean(acc)
 
     print(f"Acc Mean: {acc_mean:.4f}%")
